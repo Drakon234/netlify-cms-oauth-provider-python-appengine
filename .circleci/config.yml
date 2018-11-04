@@ -21,7 +21,7 @@ jobs:
             - ~/project/env
             - ~/project/lib
       - run: |
-          apk --no-cache add \
+          sudo apt-get install -y \
             curl \
             py-crcmod \
             libc6-compat \
