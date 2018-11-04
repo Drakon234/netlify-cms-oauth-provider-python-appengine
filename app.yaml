@@ -1,0 +1,16 @@
+runtime: python27
+service: gh-oauth
+api_version: 1
+threadsafe: true
+
+libraries:
+  - name: ssl
+    version: latest
+
+handlers:
+  - url: /.*
+    script: main.app
+
+env_variables:
+  # GAE_USE_SOCKETS_HTTPLIB: "true"
+  # SSl_ENABLED: 0

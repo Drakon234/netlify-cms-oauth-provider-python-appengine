@@ -1,4 +1,5 @@
 Flask==0.12.2
-requests-oauthlib==0.8.0
 python-dotenv==0.7.1
 pyOpenSSL==17.5.0
+uuid==1.30
+Werkzeug<0.13.0,>=0.12.0
