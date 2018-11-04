@@ -12,5 +12,5 @@ handlers:
     script: main.app
 
 env_variables:
-  # GAE_USE_SOCKETS_HTTPLIB: "true"
-  # SSl_ENABLED: 0
+  OAUTH_CLIENT_ID: --client_id--
+  OAUTH_CLIENT_SECRET: --client_secret--

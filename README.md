@@ -6,4 +6,5 @@ the
 [Generic Python](https://github.com/davidejones/netlify-cms-oauth-provider-python)
 version.
 
-## 1) Install
+Auto-deploys the master branch using CircleCI, with many details in Environment
+Variables.
