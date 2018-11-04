@@ -21,18 +21,10 @@ jobs:
             - ~/project/env
             - ~/project/lib
       - run: |
-          sudo apt-get install -y \
-            curl \
-            py-crcmod \
-            libc6-compat \
-            openssh-client \
-            && curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-220.0.0-linux-x86_64.tar.gz && \
-            tar xzf google-cloud-sdk-220.0.0-linux-x86_64.tar.gz && \
-            rm google-cloud-sdk-220.0.0-linux-x86_64.tar.gz && \
-            ln -s /lib /lib64 && \
-            gcloud config set core/disable_usage_reporting true && \
-            gcloud config set component_manager/disable_update_check true && \
-            gcloud config set metrics/environment github_docker_image
+          export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+          echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          sudo apt-get update && sudo apt-get install google-cloud-sdk
       - run:
           name: Store GCP Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
