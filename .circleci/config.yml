@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: signalnoise/gcp:10.12
+    working_directory: ~/project
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "requirements.txt" }}
+      - run: |
+          pip install virtualenv
+          virtualenv --python=python2.7 env
+          source env/bin/activate
+          pip install -t lib -r requirements.txt
+      - save_cache:
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          paths:
+            - "~/.cache/pip"
+            - ~/project/env
+            - ~/project/lib
+      - run:
+          name: Store GCP Service Account
+          command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+      - run: |
+          gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+      - run: |
+          sed 's/--client_id--/${GITHUB_CLIENT_ID}' app.yaml
+          sed 's/--client_secret--/${GITHUB_CLIENT_SECRET}' app.yaml
+      - run:
+          name: Deploy
+          command: gcloud app deploy --quiet
+
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
