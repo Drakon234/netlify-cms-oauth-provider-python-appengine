@@ -20,6 +20,19 @@ jobs:
             - "~/.cache/pip"
             - ~/project/env
             - ~/project/lib
+      - run: |
+          apk --no-cache add \
+            curl \
+            py-crcmod \
+            libc6-compat \
+            openssh-client \
+            && curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-220.0.0-linux-x86_64.tar.gz && \
+            tar xzf google-cloud-sdk-220.0.0-linux-x86_64.tar.gz && \
+            rm google-cloud-sdk-220.0.0-linux-x86_64.tar.gz && \
+            ln -s /lib /lib64 && \
+            gcloud config set core/disable_usage_reporting true && \
+            gcloud config set component_manager/disable_update_check true && \
+            gcloud config set metrics/environment github_docker_image
       - run:
           name: Store GCP Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
