@@ -32,8 +32,8 @@ jobs:
           gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
           gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
       - run: |
-          sed 's/--client_id--/${GITHUB_CLIENT_ID}/g' app.yaml
-          sed 's/--client_secret--/${GITHUB_CLIENT_SECRET}/g' app.yaml
+          sed "s/--client_id--/${GITHUB_CLIENT_ID}/g" ~/project/app.yaml > ~/project/app.yaml
+          sed "s/--client_secret--/${GITHUB_CLIENT_SECRET}/g" ~/project/app.yaml > ~/project/app.yaml
       - run:
           name: Deploy
           command: gcloud app deploy --quiet
