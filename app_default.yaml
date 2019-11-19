@@ -1,0 +1,15 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+libraries:
+  - name: ssl
+    version: latest
+
+handlers:
+  - url: /.*
+    script: main.app
+
+env_variables:
+  OAUTH_CLIENT_ID: --client_id--
+  OAUTH_CLIENT_SECRET: --client_secret--
