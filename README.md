@@ -17,10 +17,14 @@ version of the same thing, this extensively rewritten application is a lightweig
 
 * Clone the repo locally
 * Set up a [GitHub oAuth App](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
-* Put your new app's key and secret into the `/app.yaml` file (or manage your secrets another way, as long as they end up as environment variables in the deployed codebase)
+  * set some placeholder url for callback url
+* Put your new app's key and secret into the `/app.yaml` or `/app.yaml` (if this is the only app in the project) file (or manage your secrets another way, as long as they end up as environment variables in the deployed codebase)
 * Set up a Google Cloud Platform account and enable AppEngine
 * Set up the [GCloud SDK](https://cloud.google.com/sdk/) locally
+* Run `pip install -t lib -r requirements.txt` locally, to install `lib` dependency
 * Run `gcloud app deploy` from the root of the project folder
+* Copy the `target-url` provided by the `gcloud` command and set it as the callback url for your Github oAuth App created earlier
+   * `https://<<appengine-url>>.appspot.com/callback`
 * Edit your netlify CMS config to have the following `backend`:
 
 ```
